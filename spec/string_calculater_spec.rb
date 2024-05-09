@@ -12,8 +12,9 @@ describe "StringCalculator" do
       expect(calculator.add("2,5")).to eql(7)
     end
 
+    # Here error must be raised and not displayed
     it "returns 'only accepts a string' when not string" do
-      expect(calculator.add(2)).to eql('only accepts a string')
+      expect { calculator.add(2) }.to raise_error('only accepts a string')
     end
 
     it "raise exception for negative numbers" do
@@ -24,24 +25,26 @@ describe "StringCalculator" do
       expect { calculator.add("1,2,3") }.not_to raise_error
     end
 
-    it 'should return a number if the passed string contains no delimiters' do
+    # Improved description
+    it 'should return a number if the passed string contains just one number' do
       expect(calculator.add('123')).to eq (123)
     end
 
-    it 'should return a number if the passed string contains no delimiters' do
-      expect(calculator.add("123,1", "1,2")).to eq ([124, 3])
+    # Removed unnecessary test case from here...
+
+    # The test case description was unclear
+    it 'should return the sum of numbers if the passed string contains no delimiters' do
+      expect(calculator.add("123,1", "1,245", "1,1")).to eq ([124, 246, 2])
     end
 
-    it 'should return a number if the passed string contains no delimiters' do
-      expect(calculator.add("123,1", "1,2", "1,1")).to eq ([124, 3, 2])
-    end
-
-    it "adds each string separately" do
+    # The test case description was inconsistent
+    it "should return the sum of each string separately" do
       expect(calculator.add("123\n1", "1\n2,3")).to eq([124, 6])
     end
 
+    # Here error must be raised
     it "should return invalid input string separately" do
-      expect(calculator.add("1,\n")).to eq('invalid input')
+      expect{ calculator.add("1,\n") }.to raise_error('invalid input')
     end
 
     it "should allow delimeters" do
